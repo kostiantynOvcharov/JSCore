@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <link href="homework.css" rel="stylesheet">
+</head>
+<body>
+1) Create form with 10 different buttons (with 0-9 values) and one “output” field. When press any button,
+appropriate number should be shown in “output” field. Implement with one event listener.
+</br>
+2) Based on previous task. Save last user chosen value to localStorage. Fill “output” field with saved value on
+startup.
+    <form class="form">
+        <div class="buttons-container">
+            <button class="button" type="button">7</button>
+
+            <button class="button" type="button">8</button>
+
+            <button class="button" type="button">9</button>
+
+            <button class="button" type="button">4</button>
+
+            <button class="button" type="button">5</button>
+
+            <button class="button" type="button">6</button>
+
+            <button class="button" type="button">1</button>
+
+            <button class="button" type="button">2</button>
+
+            <button class="button" type="button">3</button>
+
+            <button class="button" type="button">0</button>
+        </div>
+
+        <div class="output"></div>
+    </form>
+
+    <script type="text/javascript" src="js/buttonsListener.js"></script>
+    <script type="text/javascript" src="js/persistence.js"></script>
+</body>
+</html>
+
+
+3) Why doesn’t work and how to fix:
+</br>
+Promise.resolve(1)</br>
+.then((value) => { value + 1; })</br>
+.then(alert)
+</br></br>
+
+It doesn't work because return promise needed:
+</br>
+Promise.resolve(1)</br>
+.then((value) => { return value + 1; })</br>
+.then(alert) // 2
+</br></br>
+
+4) Should work for any object:
+</br>
+const a = {};</br>
+a.setName('John');</br>
+alert(a.name);
+</br></br>
+
+We can use
+</br>
+const a = {};</br>
+a.name = 'John';</br>
+alert(a.name); // 'John'
+</br>
+or
+</br>
+const a = {</br>
+name: 'some',</br>
+setName: function(name){</br>
+this.name = name;</br>
+}</br>
+};</br>
+a.setName('John');</br>
+alert(a.name); // 'John'
+</br></br>
+
+5) Implement outputCarWithDefault function, output result in console.
+</br>
+outputCarWithDefault({ make: 'Ford' }) // Make: Ford, wheels: 4
+</br>
+outputCarWithDefault({ make: 'Ford', wheels: 6 }) // Make: Ford, wheels: 6
+</br></br>
+
+The function could be like following:
+</br>
+function outputCarWithDefault(car) {</br>
+    console.log('Make: ' + car.make + ', wheels: ' + (car.wheels ? car.wheels : 4));</br>
+}
+</br>
+function outputCarWithDefault({make, wheels=4}) {</br>
+    console.log('Make: ' + make + ', wheels: ' + wheels);</br>
+}
+</br></br>
+
+6) Create simple calculator that will perform simple operations that encapsulate it's implementation. Use
+functions.
+</br>
+var calculator = Calculator();
+</br>
+calculator.add(5, 5); // 10
+</br>
+calculator.fibonacci(10); // 55
+</br>
+add() // ReferenceError: add is not defined
+</br>
+fibonacci() // ReferenceError: fibonacci is not defined
+</br></br>
+
+I would like to use the class for this purpose:</br>
+class Calculator {</br>
+    add(first, second) {</br>
+        return first + second;</br>
+    }</br>
+</br>
+    fibonacci(num) {</br>
+        if (num <= 1) return 1;</br>
+        return this.fibonacci(num - 1) + this.fibonacci(num - 2);</br>
+    };</br>
+}</br>
+</br>
+var calculator = new Calculator();</br>
+calculator.add(5, 5);</br>
+calculator.fibonacci(10);
+</br></br>
