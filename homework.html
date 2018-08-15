@@ -89,11 +89,13 @@ outputCarWithDefault({ make: 'Ford' }) // Make: Ford, wheels: 4
 outputCarWithDefault({ make: 'Ford', wheels: 6 }) // Make: Ford, wheels: 6
 </br></br>
 
-The function could be like following:
+The function could be like:
 </br>
 function outputCarWithDefault(car) {</br>
     console.log('Make: ' + car.make + ', wheels: ' + (car.wheels ? car.wheels : 4));</br>
 }
+</br>
+or with destructors:
 </br>
 function outputCarWithDefault({make, wheels=4}) {</br>
     console.log('Make: ' + make + ', wheels: ' + wheels);</br>
@@ -130,3 +132,92 @@ var calculator = new Calculator();</br>
 calculator.add(5, 5);</br>
 calculator.fibonacci(10);
 </br></br>
+
+7) Create function that will always greet specific person with different greetings that are going in fixed order:</br>
+var greetJohn = greet('John');</br>
+greetJohn(); // 'Hi, John'</br>
+greetJohn(); // 'Hello, John'</br>
+greetJohn(); // 'Aloha, John'</br>
+greetJohn(); // 'Ahoy, John'</br>
+greetJohn(); // 'Hi, John'</br>
+greetJohn(); // 'Hello, John'</br>
+(and so on...)</br>
+Output result in console.
+</br></br>
+
+The function could be as follow:
+</br>
+var counter = -1;</br>
+var salutations = ['Hi', 'Hello', 'Aloha', 'Ahoy'];</br>
+</br>
+function greet(name) {</br>
+    return () => {</br>
+        if (counter >= salutations.length - 1) counter = -1;</br>
+
+        console.log(salutations[++counter] + ', ' + name)</br>
+    }</br>
+}</br>
+</br>
+var greetJohn = greet('John');</br>
+greetJohn(); // 'Hi, John'</br>
+greetJohn(); // 'Hello, John'</br>
+(and so on...)
+</br></br>
+
+8) Create object method that will accept greeting:</br>
+var john = {</br>
+name: 'John',</br>
+greet(greeting){ /* Implement this part */ }</br>
+};</br>
+var greetJohn = john.greet('Aloha');</br>
+greetJohn(); // 'Aloha, John';
+</br></br>
+
+The object method could be as follow:</br>
+var john = {</br>
+    name: 'John',</br>
+    greet(greeting) {</br>
+        return () => console.log(greeting + ', ' + this.name);</br>
+    }</br>
+};</br>
+</br>
+
+var greetJohn = john.greet('Aloha');</br>
+greetJohn(); // 'Aloha, John';
+</br></br>
+
+9) Implement object that will behave as follow:</br>
+var john = { name: 'John', ... };</br>
+console.log(`${john}`); // 'My name is John!'
+</br></br>
+
+The object could be as follow:</br>
+var john = {</br>
+    name: 'John',</br>
+    toString() {</br>
+        return 'My name is ' + this.name;</br>
+    }</br>
+}</br>
+</br>
+
+console.log(`${john}`); // 'My name is John!'
+</br></br>
+
+10) Why it works so and how to fix:</br>
+var userJohn = {name: 'John', age: 30};</br>
+var userMike = userJohn;</br>
+userMike.name = 'Mike';</br>
+console.log(userMike.name) // Mike - correct behavior</br>
+console.log(userJohn.name) // Mike - wrong behavior, 'John' expected</br>
+</br></br>
+It works that way because the variables userMike and userJohn point to the same memory slot (userMike is the userJohn reference copy)</br>
+I've read pretty useful record about cloning there https://stackoverflow.com/questions/728360/how-do-i-correctly-clone-a-javascript-object.</br>
+So, If you want shallow copy, use Object.assign({}, a)</br>
+For "deep" copy, use JSON.parse(JSON.stringify(a))</br>
+For more sophisticated cases we can write custom copy function like described in the record above</br></br>
+So, the solution could be:</br>
+var userJohn = {name: 'John', age: 30};</br>
+var userMike = Object.assign({}, userJohn); // or for deep copy var userMike = JSON.parse(JSON.stringify(userJohn));</br>
+userMike.name = 'Mike';</br>
+console.log(userMike.name); // Mike</br>
+console.log(userJohn.name); // John
