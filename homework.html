@@ -53,7 +53,7 @@ Promise.resolve(1)</br>
 It doesn't work because return promise needed:
 </br>
 Promise.resolve(1)</br>
-.then((value) => { return value + 1; })</br>
+.then((value) => { return value + 1; }) // or .then((value) => (value + 1))</br>
 .then(alert) // 2
 </br></br>
 
@@ -65,6 +65,15 @@ alert(a.name);
 </br></br>
 
 We can use
+</br>
+Object.prototype.setName = function setName(name) {</br>
+this.name = name;</br>
+}</br>
+const a = {};</br>
+a.setName('John');</br>
+alert(a.name); // 'John'
+</br>
+or
 </br>
 const a = {};</br>
 a.name = 'John';</br>
@@ -98,7 +107,7 @@ function outputCarWithDefault(car) {</br>
 or with destructors:
 </br>
 function outputCarWithDefault({make, wheels=4}) {</br>
-    console.log('Make: ' + make + ', wheels: ' + wheels);</br>
+    console.log(`Make: ${make}, wheels: ${wheels}`);</br>
 }
 </br></br>
 
@@ -147,10 +156,9 @@ Output result in console.
 
 The function could be as follow:
 </br>
-var counter = -1;</br>
-var salutations = ['Hi', 'Hello', 'Aloha', 'Ahoy'];</br>
-</br>
 function greet(name) {</br>
+    var counter = -1;</br>
+    var salutations = ['Hi', 'Hello', 'Aloha', 'Ahoy'];</br>
     return () => {</br>
         if (counter >= salutations.length - 1) counter = -1;</br>
 
@@ -218,6 +226,7 @@ For more sophisticated cases we can write custom copy function like described in
 So, the solution could be:</br>
 var userJohn = {name: 'John', age: 30};</br>
 var userMike = Object.assign({}, userJohn); // or for deep copy var userMike = JSON.parse(JSON.stringify(userJohn));</br>
+or simply var userMike = { ...userJohn };</br>
 userMike.name = 'Mike';</br>
 console.log(userMike.name); // Mike</br>
 console.log(userJohn.name); // John
